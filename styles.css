@@ -27,3 +27,11 @@ body {
 #container {
   padding: 12px;
 }
+
+#canvasContainer {
+  padding-top: 12px;
+}
+
+#canvasChart {
+  background-color: #949410;
+}
