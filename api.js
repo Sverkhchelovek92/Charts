@@ -3,26 +3,32 @@ const API_KEY = '8d8791b7-8d9d-4103-80e4-e3e9f1a12ab5'
 const USER_ID = '989665'
 
 export async function fetchUserVotes(limit = 50) {
-  const url = `https://kinopoiskapiunofficial.tech/api/v1/kp_users/${USER_ID}/votes`
+  const pageSize = 20
+  const pages = Math.ceil(limit / pageSize)
+  let allVotes = []
 
-  const response = await fetch(url, {
-    headers: {
-      'X-API-KEY': API_KEY,
-      Accept: 'application/json',
-    },
-  })
+  for (let page = 1; page <= pages; page++) {
+    const url = `https://kinopoiskapiunofficial.tech/api/v1/kp_users/${USER_ID}/votes?page=${page}&limit=${pageSize}`
+    const response = await fetch(url, {
+      headers: {
+        'X-API-KEY': API_KEY,
+        Accept: 'application/json',
+      },
+    })
 
-  if (!response.ok) {
-    throw new Error(`Ошибка API: ${response.status}`)
+    if (!response.ok) {
+      throw new Error(`Ошибка API: ${response.status}`)
+    }
+
+    const data = await response.json()
+    const rawVotes = data.items || []
+    allVotes = allVotes.concat(rawVotes)
+
+    // если фильмов меньше чем pageSize — можно прервать цикл раньше
+    if (rawVotes.length < pageSize) break
   }
 
-  const data = await response.json()
-  console.log('Ответ API:', data)
-
-  const rawVotes = data.items
-  console.log('Raw Votes', rawVotes)
-
-  const votes = rawVotes.slice(0, limit).map((v) => ({
+  const votes = allVotes.slice(0, limit).map((v) => ({
     name: v.nameOriginal || v.nameRu,
     filmId: v.kinopoiskId,
     year: v.year,
@@ -30,6 +36,6 @@ export async function fetchUserVotes(limit = 50) {
   }))
 
   console.log('Обработанные оценки:', votes)
-
+  console.log('Total Votes:', votes.length)
   return votes
 }
