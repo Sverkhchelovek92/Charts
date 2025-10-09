@@ -19,13 +19,17 @@ export async function fetchUserVotes(limit = 50) {
   const data = await response.json()
   console.log('Ответ API:', data)
 
-  const votes = (data.votes || []).slice(0, limit).map((v) => ({
-    filmId: v.filmId,
-    name: v.nameRu || v.nameEn || 'Без названия',
-    rating: v.rating,
-    date: v.date,
+  const rawVotes = data.items
+  console.log('Raw Votes', rawVotes)
+
+  const votes = rawVotes.slice(0, limit).map((v) => ({
+    name: v.nameOriginal || v.nameRu,
+    filmId: v.kinopoiskId,
+    year: v.year,
+    rating: v.userRating,
   }))
 
   console.log('Обработанные оценки:', votes)
+
   return votes
 }
