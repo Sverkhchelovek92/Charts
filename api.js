@@ -17,14 +17,13 @@ export async function fetchUserVotes(limit = 50) {
     })
 
     if (!response.ok) {
-      throw new Error(`Ошибка API: ${response.status}`)
+      throw new Error(`API Error: ${response.status}`)
     }
 
     const data = await response.json()
     const rawVotes = data.items || []
     allVotes = allVotes.concat(rawVotes)
 
-    // если фильмов меньше чем pageSize — можно прервать цикл раньше
     if (rawVotes.length < pageSize) break
   }
 
@@ -35,7 +34,7 @@ export async function fetchUserVotes(limit = 50) {
     rating: v.userRating,
   }))
 
-  console.log('Обработанные оценки:', votes)
+  console.log('Number of Votes:', votes)
   console.log('Total Votes:', votes.length)
   return votes
 }
