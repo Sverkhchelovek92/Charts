@@ -1,10 +1,35 @@
 import { fetchUserVotes } from './api.js'
 
 document.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const votes = await fetchUserVotes(50)
-    // console.log(votes)
-  } catch (err) {
-    console.error('Ошибка:', err)
-  }
+  const votes = await fetchUserVotes(50)
+  const sortedVotes = votes.slice().reverse()
+  console.log(sortedVotes)
+
+  const labels = sortedVotes.map((v) => v.name)
+  const ratings = sortedVotes.map((v) => v.rating)
+
+  new Chart(document.getElementById('canvasChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'My Kinopoisk Ratings',
+          data: ratings,
+          borderColor: '#4f8df5',
+          backgroundColor: '#4f8df5',
+          tension: 0.2,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          min: 0,
+          max: 10,
+        },
+      },
+    },
+  })
 })

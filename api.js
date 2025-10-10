@@ -35,6 +35,5 @@ export async function fetchUserVotes(limit = 50) {
   }))
 
   console.log('Number of Votes:', votes)
-  console.log('Total Votes:', votes.length)
   return votes
 }
