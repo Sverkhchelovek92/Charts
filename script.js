@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         {
           label: 'My Kinopoisk Ratings',
           data: ratings,
-          borderColor: '#4f8df5',
-          backgroundColor: '#4f8df5',
-          tension: 0.2,
+          borderColor: '#d6f763',
+          backgroundColor: '#eb8e36',
+          tension: 0,
         },
       ],
     },
