@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     options: {
       responsive: true,
       scales: {
+        x: {
+          ticks: {
+            display: false,
+          },
+        },
         y: {
           min: 0,
           max: 10,

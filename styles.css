@@ -34,4 +34,5 @@ body {
 
 #canvasChart {
   background-color: #26303b;
+  max-height: 500px;
 }
