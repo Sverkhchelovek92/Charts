@@ -30,9 +30,12 @@ body {
 
 #canvasContainer {
   padding-top: 12px;
+  width: 800px;
+  height: 300px;
+  /* margin: 0 auto; */
 }
 
 #canvasChart {
   background-color: #26303b;
-  max-height: 500px;
+  /* max-height: 500px; */
 }

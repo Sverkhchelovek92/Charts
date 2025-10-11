@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sortedVotes = votes.slice().reverse()
   console.log(sortedVotes)
 
-  const labels = sortedVotes.map((v) => v.name)
+  // const labels = sortedVotes.map((v) => v.name)
+  const labels = sortedVotes.map(() => '')
+  const titles = sortedVotes.map((v) => v.name)
   const ratings = sortedVotes.map((v) => v.rating)
 
   new Chart(document.getElementById('canvasChart'), {
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       scales: {
         x: {
           ticks: {
@@ -33,6 +36,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         y: {
           min: 0,
           max: 10,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            title: (context) => {
+              const index = context[0].dataIndex
+              return `${titles[index]} (${sortedVotes[index].year})`
+            },
+          },
         },
       },
     },
