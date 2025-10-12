@@ -5,10 +5,10 @@ document.addEventListener('DOMContentLoaded', async () => {
   const sortedVotes = votes.slice().reverse()
   console.log(sortedVotes)
 
-  // const labels = sortedVotes.map((v) => v.name)
   const labels = sortedVotes.map(() => '')
   const titles = sortedVotes.map((v) => v.name)
   const ratings = sortedVotes.map((v) => v.rating)
+  const filmIds = sortedVotes.map((v) => v.filmId)
 
   new Chart(document.getElementById('canvasChart'), {
     type: 'line',
@@ -47,6 +47,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             },
           },
         },
+      },
+      onClick: (evt, elements) => {
+        if (elements.length > 0) {
+          const index = elements[0].index
+          const filmId = filmIds[index]
+          const url = `https://www.kinopoisk.ru/film/${filmId}/`
+          window.open(url, '_blank')
+        }
       },
     },
   })
