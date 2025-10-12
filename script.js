@@ -56,6 +56,10 @@ document.addEventListener('DOMContentLoaded', async () => {
           window.open(url, '_blank')
         }
       },
+      onHover: (event, elements) => {
+        const target = event.native.target
+        target.style.cursor = elements.length ? 'pointer' : 'default'
+      },
     },
   })
 })
