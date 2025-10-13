@@ -39,3 +39,16 @@ body {
   background-color: #26303b;
   /* max-height: 500px; */
 }
+
+#kpControls {
+  margin-top: 10px;
+}
+
+#id-Input,
+#id-Button {
+  padding: 5px;
+}
+
+#id-Button {
+  cursor: pointer;
+}
