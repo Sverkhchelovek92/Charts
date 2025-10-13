@@ -2,8 +2,16 @@ import { fetchUserVotes } from './api.js'
 
 const defaultUserId = '989665'
 
-document.addEventListener('DOMContentLoaded', async () => {
-  const votes = await fetchUserVotes(defaultUserId, 50)
+let chart = null
+
+async function renderChart(userId) {
+  const votes = await fetchUserVotes(userId, 50)
+
+  if (!votes || votes.length === 0) {
+    alert(`We couldn't get the ratings of this user`)
+    return
+  }
+
   const sortedVotes = votes.slice().reverse()
   console.log(sortedVotes)
 
@@ -12,7 +20,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const ratings = sortedVotes.map((v) => v.rating)
   const filmIds = sortedVotes.map((v) => v.filmId)
 
-  new Chart(document.getElementById('canvasChart'), {
+  if (chart) {
+    chart.destroy()
+  }
+
+  chart = new Chart(document.getElementById('canvasChart'), {
     type: 'line',
     data: {
       labels,
@@ -63,5 +75,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         target.style.cursor = elements.length ? 'pointer' : 'default'
       },
     },
+  })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderChart(defaultUserId)
+
+  document.getElementById('id-Button').addEventListener('click', () => {
+    const newId = document.getElementById('id-Input').value.trim()
+    if (newId) {
+      renderChart(newId)
+    } else {
+      alert('Please Type User Id')
+    }
   })
 })

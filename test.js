@@ -1,35 +1,63 @@
-export async function fetchUserVotes(limit = 50) {
-  const url = `${API_BASE}/kp_users/${USER_ID}/votes`
+document.addEventListener('DOMContentLoaded', async () => {
+  const votes = await fetchUserVotes(defaultUserId, 50)
+  const sortedVotes = votes.slice().reverse()
+  console.log(sortedVotes)
 
-  const pageSize = 20
-  const pages = Math.ceil(limit / pageSize)
-  let allVotes = []
+  const labels = sortedVotes.map(() => '')
+  const titles = sortedVotes.map((v) => v.name)
+  const ratings = sortedVotes.map((v) => v.rating)
+  const filmIds = sortedVotes.map((v) => v.filmId)
 
-  const response = await fetch(url, {
-    headers: {
-      'X-API-KEY': API_KEY,
-      Accept: 'application/json',
+  new Chart(document.getElementById('canvasChart'), {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'My Kinopoisk Ratings',
+          data: ratings,
+          borderColor: '#d6f763',
+          backgroundColor: '#eb8e36',
+          tension: 0,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          ticks: {
+            display: false,
+          },
+        },
+        y: {
+          min: 0,
+          max: 10,
+        },
+      },
+      plugins: {
+        tooltip: {
+          callbacks: {
+            title: (context) => {
+              const index = context[0].dataIndex
+              return `${titles[index]} (${sortedVotes[index].year})`
+            },
+          },
+        },
+      },
+      onClick: (evt, elements) => {
+        if (elements.length > 0) {
+          const index = elements[0].index
+          const filmId = filmIds[index]
+          const url = `https://www.kinopoisk.ru/film/${filmId}/`
+          window.open(url, '_blank')
+        }
+      },
+      onHover: (event, elements) => {
+        const target = event.native.target
+        target.style.cursor = elements.length ? 'pointer' : 'default'
+      },
     },
   })
-
-  if (!response.ok) {
-    throw new Error(`Ошибка API: ${response.status}`)
-  }
-
-  const data = await response.json()
-  console.log('Ответ API:', data)
-
-  const rawVotes = data.items
-  console.log('Raw Votes', rawVotes)
-
-  const votes = rawVotes.slice(0, limit).map((v) => ({
-    name: v.nameOriginal || v.nameRu,
-    filmId: v.kinopoiskId,
-    year: v.year,
-    rating: v.userRating,
-  }))
-
-  console.log('Обработанные оценки:', votes)
-
-  return votes
-}
+})
