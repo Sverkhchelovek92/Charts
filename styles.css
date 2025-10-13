@@ -51,4 +51,10 @@ body {
 
 #id-Button {
   cursor: pointer;
+  background-color: #f55e53;
+  transition: background-color 0.2s;
+}
+
+#id-Button:hover {
+  background-color: #e64e43;
 }

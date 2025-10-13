@@ -1,7 +1,9 @@
 import { fetchUserVotes } from './api.js'
 
+const defaultUserId = '989665'
+
 document.addEventListener('DOMContentLoaded', async () => {
-  const votes = await fetchUserVotes(50)
+  const votes = await fetchUserVotes(defaultUserId, 50)
   const sortedVotes = votes.slice().reverse()
   console.log(sortedVotes)
 
