@@ -8,7 +8,7 @@ export async function fetchUserVotes(userId, limit = 50) {
   let allVotes = []
 
   for (let page = 1; page <= pages; page++) {
-    const url = `https://kinopoiskapiunofficial.tech/api/v1/kp_users/${userId}/votes?page=${page}&limit=${pageSize}`
+    const url = `${API_BASE}/kp_users/${userId}/votes?page=${page}&limit=${pageSize}`
     const response = await fetch(url, {
       headers: {
         'X-API-KEY': API_KEY,
