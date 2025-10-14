@@ -12,14 +12,32 @@
       <div id="canvasContainer">
         <canvas id="canvasChart" width="800" height="400"></canvas>
       </div>
-      <div id="kpControls">
-        <input
-          type="text"
-          id="id-Input"
-          placeholder="Введите ID пользователя"
-        />
-        <button id="id-Button">Show Ratings</button>
+
+      <div id="controls">
+        <label for="chartTypeSelect"
+          >Which graph would you like to construct?</label
+        >
+        <br />
+        <select id="chartTypeSelect">
+          <option value="crypto">Cryptocurrency</option>
+          <option value="kinopoisk">Kinopoisk Ratings</option>
+          <option value="weather">Weather</option>
+        </select>
+
+        <!-- динамически появляющийся блок -->
+        <div id="chartOptions">
+          <div id="kpControls">
+            <input
+              type="text"
+              id="id-Input"
+              placeholder="Введите ID пользователя"
+            />
+            <button id="id-Button">Show Ratings</button>
+          </div>
+        </div>
       </div>
+
+      <!-- Dynamic Block -->
     </div>
 
     <script type="module" src="script.js"></script>

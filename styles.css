@@ -40,6 +40,16 @@ body {
   /* max-height: 500px; */
 }
 
+#controls {
+  margin-top: 10px;
+}
+
+#chartTypeSelect {
+  cursor: pointer;
+  padding: 5px;
+  margin-top: 5px;
+}
+
 #kpControls {
   margin-top: 10px;
 }

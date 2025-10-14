@@ -1,6 +1,5 @@
 const API_BASE = 'https://kinopoiskapiunofficial.tech/api/v1'
 const API_KEY = '8d8791b7-8d9d-4103-80e4-e3e9f1a12ab5'
-// const USER_ID = '989665'
 
 export async function fetchUserVotes(userId, limit = 50) {
   const pageSize = 20
@@ -34,6 +33,5 @@ export async function fetchUserVotes(userId, limit = 50) {
     rating: v.userRating,
   }))
 
-  // console.log('Number of Votes:', votes)
   return votes
 }
