@@ -1,11 +1,12 @@
 import { fetchUserVotes } from './api.js'
+import { fetchKinopoiskRatings } from './api/kinopoisk.js'
 
 const defaultUserId = '989665'
 
 let chart = null
 
 async function renderChart(userId) {
-  const votes = await fetchUserVotes(userId, 50)
+  const votes = await fetchKinopoiskRatings(userId, 50)
 
   if (!votes || votes.length === 0) {
     alert(`We couldn't get the ratings of this user`)
