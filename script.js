@@ -1,9 +1,12 @@
-import { fetchUserVotes } from './api.js'
+import { fetchCryptoPrices } from './api/crypto.js'
 import { fetchKinopoiskRatings } from './api/kinopoisk.js'
+import { fetchWeather } from './api/weather.js'
 
 const defaultUserId = '989665'
 
 let chart = null
+
+const canvas = document.getElementById('canvasChart')
 
 async function renderChart(userId) {
   const votes = await fetchKinopoiskRatings(userId, 50)
@@ -25,7 +28,7 @@ async function renderChart(userId) {
     chart.destroy()
   }
 
-  chart = new Chart(document.getElementById('canvasChart'), {
+  chart = new Chart(canvas, {
     type: 'line',
     data: {
       labels,
