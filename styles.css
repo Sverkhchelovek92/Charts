@@ -54,17 +54,17 @@ body {
   margin-top: 10px;
 }
 
-#id-Input,
-#id-Button {
+#kpUserId,
+#kpButton {
   padding: 5px;
 }
 
-#id-Button {
+#kpButton {
   cursor: pointer;
   background-color: #f55e53;
   transition: background-color 0.2s;
 }
 
-#id-Button:hover {
+#kpButton:hover {
   background-color: #e64e43;
 }

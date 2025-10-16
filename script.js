@@ -19,6 +19,14 @@ function renderOptions() {
 
   if (chartType === 'kinopoisk') {
     console.log('kinopoisk')
+
+    chartOptions.innerHTML = `
+     <div id="kpControls"> 
+      <input type="text" id="kpUserId" placeholder="User ID" value="Enter User ID">
+      <button id="kpButton">Show Ratings</button>
+     </div>
+     
+    `
   }
   if (chartType === 'crypto') {
     console.log('crypto')
@@ -105,8 +113,8 @@ async function renderChart(userId) {
 document.addEventListener('DOMContentLoaded', () => {
   renderChart(defaultUserId)
 
-  document.getElementById('id-Button').addEventListener('click', () => {
-    const newId = document.getElementById('id-Input').value.trim()
+  document.getElementById('kpButton').addEventListener('click', () => {
+    const newId = document.getElementById('kpUserId').value.trim()
     if (newId) {
       renderChart(newId)
     } else {
