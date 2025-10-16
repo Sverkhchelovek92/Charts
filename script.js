@@ -7,6 +7,26 @@ const defaultUserId = '989665'
 let chart = null
 
 const canvas = document.getElementById('canvasChart')
+const chartTypeSelect = document.getElementById('chartTypeSelect')
+const chartOptions = document.getElementById('chartOptions')
+
+chartTypeSelect.addEventListener('change', renderOptions)
+renderOptions()
+
+function renderOptions() {
+  const chartType = chartTypeSelect.value
+  chartOptions.innerHTML = ''
+
+  if (chartType === 'kinopoisk') {
+    console.log('kinopoisk')
+  }
+  if (chartType === 'crypto') {
+    console.log('crypto')
+  }
+  if (chartType === 'weather') {
+    console.log('weather')
+  }
+}
 
 async function renderChart(userId) {
   const votes = await fetchKinopoiskRatings(userId, 50)
