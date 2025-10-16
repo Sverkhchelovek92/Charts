@@ -21,18 +21,32 @@ function renderOptions() {
     console.log('kinopoisk')
 
     chartOptions.innerHTML = `
-     <div id="kpControls"> 
+     <div id="controls"> 
       <input type="text" id="kpUserId" placeholder="User ID" value="Enter User ID">
       <button id="kpButton">Show Ratings</button>
-     </div>
-     
-    `
+     </div>`
   }
   if (chartType === 'crypto') {
     console.log('crypto')
+
+    chartOptions.innerHTML = `
+     <div id="controls"> 
+      <select id="cryptoSelect">
+        <option value="bitcoin">Bitcoin</option>
+        <option value="ethereum">Ethereum</option>
+      </select>
+      <button id="cryptoButton">Show Ratings</button>
+     </div>
+    `
   }
   if (chartType === 'weather') {
     console.log('weather')
+
+    chartOptions.innerHTML = `
+     <div id="controls"> 
+      <input type="text" id="cityInput" placeholder="City" value="Моscow">
+      <button id="weatherButton">Show Weather</button>
+     </div>`
   }
 }
 

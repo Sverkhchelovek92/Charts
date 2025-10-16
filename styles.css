@@ -50,21 +50,29 @@ body {
   margin-top: 5px;
 }
 
-#kpControls {
+#controls {
   margin-top: 10px;
 }
 
 #kpUserId,
-#kpButton {
+#kpButton,
+#cryptoSelect,
+#cryptoButton,
+#cityInput,
+#weatherButton {
   padding: 5px;
 }
 
-#kpButton {
+#kpButton,
+#cryptoButton,
+#weatherButton {
   cursor: pointer;
   background-color: #f55e53;
   transition: background-color 0.2s;
 }
 
-#kpButton:hover {
+#kpButton:hover,
+#cryptoButton:hover,
+#weatherButton:hover {
   background-color: #e64e43;
 }
