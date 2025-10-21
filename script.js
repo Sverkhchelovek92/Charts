@@ -1,8 +1,6 @@
-import { fetchCryptoPrices } from './api/crypto.js'
-import { fetchKinopoiskRatings } from './api/kinopoisk.js'
-import { fetchWeather } from './api/weather.js'
-
 import { renderKinopoiskChart } from './charts/kinopoiskChart.js'
+// import { renderCryptoChart } from './charts/cryptoChart.js'
+// import { renderWeatherChart } from './charts/weatherChart.js'
 
 const defaultUserId = '989665'
 

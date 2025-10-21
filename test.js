@@ -1,5 +1,11 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const votes = await fetchUserVotes(defaultUserId, 50)
+async function renderChart(userId) {
+  const votes = await fetchKinopoiskRatings(userId, 50)
+
+  if (!votes || votes.length === 0) {
+    alert(`We couldn't get the ratings of this user`)
+    return
+  }
+
   const sortedVotes = votes.slice().reverse()
   console.log(sortedVotes)
 
@@ -8,7 +14,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   const ratings = sortedVotes.map((v) => v.rating)
   const filmIds = sortedVotes.map((v) => v.filmId)
 
-  new Chart(document.getElementById('canvasChart'), {
+  if (chart) {
+    chart.destroy()
+  }
+
+  chart = new Chart(canvas, {
     type: 'line',
     data: {
       labels,
@@ -60,4 +70,4 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
     },
   })
-})
+}
