@@ -1,6 +1,6 @@
 import { renderKinopoiskChart } from './charts/kinopoiskChart.js'
 import { renderCryptoChart } from './charts/cryptoChart.js'
-// import { renderWeatherChart } from './charts/weatherChart.js'
+import { renderWeatherChart } from './charts/weatherChart.js'
 
 const defaultUserId = '989665'
 
@@ -44,7 +44,7 @@ function renderOptions() {
         <option value="bitcoin">Bitcoin</option>
         <option value="ethereum">Ethereum</option>
       </select>
-      <button id="cryptoButton">Show Ratings</button>
+      <button id="cryptoButton">Show Chart</button>
      </div>
     `
     document
@@ -60,7 +60,7 @@ function renderOptions() {
 
     chartOptions.innerHTML = `
      <div id="controls"> 
-      <input type="text" id="cityInput" placeholder="City" value="Моscow">
+      <input type="text" id="cityInput" placeholder="City" value="Moscow">
       <button id="weatherButton">Show Weather</button>
      </div>`
 

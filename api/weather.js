@@ -1,34 +1,33 @@
-const API_KEY = 'b9c4f38e842525dec4414df06ca69aa3'
-
-async function geocodeCity(city) {
-  const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(
+export async function fetchWeather(city = 'Moscow') {
+  // 1. Получаем координаты города
+  const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
     city
-  )}&limit=1&appid=${API_KEY}`
-  const response = await fetch(geoUrl)
-  if (!response.ok) throw new Error('Geocoding Error')
+  )}&count=1&language=en&format=json`
+  const geoResponse = await fetch(geoUrl)
+  if (!geoResponse.ok) throw new Error('Geocoding error')
 
-  const data = await response.json()
-  if (!data.length) throw new Error(`Couldn't find the place`)
+  const geoData = await geoResponse.json()
+  if (!geoData.results || geoData.results.length === 0) {
+    throw new Error(`City "${city}" not found`)
+  }
 
-  return { lat: data[0].lat, lon: data[0].lon }
-}
+  const { latitude, longitude } = geoData.results[0]
 
-export async function fetchWeather(city = 'Москва') {
-  const { lat, lon } = await geocodeCity(city)
+  // 2. Получаем почасовой прогноз температуры
+  const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&forecast_days=1&timezone=auto`
+  const weatherResponse = await fetch(weatherUrl)
+  if (!weatherResponse.ok) throw new Error('Weather fetch error')
 
-  const weatherUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,daily,alerts&units=metric&lang=ru&appid=${API_KEY}`
-  const response = await fetch(weatherUrl)
-  if (!response.ok) throw new Error('Error getting weather')
+  const data = await weatherResponse.json()
+  const hours = data.hourly.time.slice(0, 24)
+  const temps = data.hourly.temperature_2m.slice(0, 24)
 
-  const data = await response.json()
-  const hourly = data.hourly.slice(0, 24) // 24 Hours Weather forecast
-
-  return hourly.map((h) => {
-    const date = new Date(h.dt * 1000)
-    const hours = date.getHours().toString().padStart(2, '0') + ':00'
-    return {
-      label: hours,
-      value: Math.round(h.temp), // Temperature Round Up
-    }
-  })
+  // 3. Формируем данные для графика
+  return hours.map((t, i) => ({
+    label: new Date(t).toLocaleTimeString('ru-RU', {
+      hour: '2-digit',
+      minute: '2-digit',
+    }),
+    value: temps[i],
+  }))
 }
