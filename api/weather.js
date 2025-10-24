@@ -1,5 +1,5 @@
 export async function fetchWeather(city = 'Moscow') {
-  // 1. Получаем координаты города
+  // Get city geodata
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(
     city
   )}&count=1&language=en&format=json`
@@ -13,7 +13,7 @@ export async function fetchWeather(city = 'Moscow') {
 
   const { latitude, longitude } = geoData.results[0]
 
-  // 2. Получаем почасовой прогноз температуры
+  // Get temperature
   const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m&forecast_days=1&timezone=auto`
   const weatherResponse = await fetch(weatherUrl)
   if (!weatherResponse.ok) throw new Error('Weather fetch error')
@@ -22,7 +22,7 @@ export async function fetchWeather(city = 'Moscow') {
   const hours = data.hourly.time.slice(0, 24)
   const temps = data.hourly.temperature_2m.slice(0, 24)
 
-  // 3. Формируем данные для графика
+  // Create data for graph
   return hours.map((t, i) => ({
     label: new Date(t).toLocaleTimeString('ru-RU', {
       hour: '2-digit',

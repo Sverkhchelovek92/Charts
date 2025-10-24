@@ -38,12 +38,12 @@ export async function renderWeatherChart(
       labels,
       datasets: [
         {
-          label: `Температура — ${city}`,
+          label: `Temperature — ${city}`,
           data: temps,
           borderColor: '#ff9800',
           backgroundColor: '#ffcc80',
           tension: 0.3,
-          fill: true,
+          //   fill: true,
         },
       ],
     },
@@ -52,7 +52,7 @@ export async function renderWeatherChart(
       maintainAspectRatio: false,
       scales: {
         y: {
-          title: { display: true, text: 'Температура (°C)' },
+          title: { display: true, text: 'Temperature (°C)' },
         },
       },
       plugins: {
